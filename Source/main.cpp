@@ -5,10 +5,13 @@
 #include <fstream>
 #include <vector>
 #include <ranges>
+#include <chrono>
+
+#include "solution.h"
 
 int main(int argc, const char **argv)
 {
-	std::vector<std::vector<int>> matrix;
+	TSP::matrix<int> graph;
 	int size;
 
 	if (argc < 2)
@@ -19,23 +22,33 @@ int main(int argc, const char **argv)
 	}
 
 	std::ifstream input(argv[1]);
+
+	std::cout << "Filename: " << argv[1] << std::endl;
 	
 	input >> size;
 
+	std::cout << "Reading graph...";
 	for (const auto& i : std::views::iota(0, size))
 	{
-		matrix.emplace_back();
+		graph.emplace_back();
 		for (const auto& j : std::views::iota(0, size))
 		{
 			int number;
 			input >> number;
 
-			matrix[i].push_back(number);
-
-			std::cout << matrix[i][j] << ' ';
+			graph[i].push_back(number);
 		}
-		std::cout << std::endl;
 	}
+	std::cout << "Complete\n";
+
+	TSP tsp(graph, 0);
+	std::cout << "Call TSP::solve()\n";
+	auto start = std::chrono::high_resolution_clock::now();
+	std::cout << tsp.Solve() << std::endl;
+	auto end = std::chrono::high_resolution_clock::now();
+
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+	std::cout << "Time: " << duration << std::endl;
 
 	return EXIT_SUCCESS;
 }
