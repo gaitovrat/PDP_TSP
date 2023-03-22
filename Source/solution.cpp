@@ -1,6 +1,7 @@
 #include "solution.h"
 
 #include <algorithm>
+#include <iostream>
 
 TSP::TSP(const TSP::matrix<int> &graph, int start)
     : m_permutations(), m_graph(graph), m_minDistance(INT_MAX),
@@ -36,6 +37,10 @@ void TSP::ComputeDistance() {
 
   m_minDistanceMutex.lock();
   m_minDistance = std::min(m_minDistance, distance);
+  for (const auto &el : m_permutations) {
+    std::cout << el << ' ';
+  }
+  std::cout << " - " << m_minDistance << std::endl;
   m_minDistanceMutex.unlock();
 }
 
