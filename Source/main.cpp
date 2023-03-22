@@ -28,10 +28,10 @@ int main(int argc, const char **argv)
 	input >> size;
 
 	std::cout << "Reading graph...";
-	for (const auto& i : std::views::iota(0, size))
+	for (int i = 0; i < size; ++i)
 	{
 		graph.emplace_back();
-		for (const auto& j : std::views::iota(0, size))
+		for (int j = 0; j < size; ++j)
 		{
 			int number;
 			input >> number;
@@ -48,7 +48,7 @@ int main(int argc, const char **argv)
 	auto end = std::chrono::high_resolution_clock::now();
 
 	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
-	std::cout << "Time: " << duration << std::endl;
+	std::cout << "Time: " << duration.count() << std::endl;
 
 	return EXIT_SUCCESS;
 }

@@ -6,7 +6,7 @@ class TSP
 {
 public:
 	template <class T>
-	using matrix = std::vector<std::vector<T>>;
+	using matrix = std::vector<std::vector<T> >;
 	
 	TSP(const TSP::matrix<int>& graph, int start);
 
